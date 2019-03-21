@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html>
+<script>
+function changecolor(id)
+{
+	document.getElementById(id).style.backgroundColor = "white";
+}
+function validate()
+{
+  var fname = document.forms["myForm"]["fname"].value;
+  var lname = document.forms["myForm"]["lname"].value;
+  var email = document.forms["myForm"]["email"].value;
+  var password = document.forms["myForm"]["password"].value;
+  var cpassword = document.forms["myForm"]["cpassword"].value;
+  var cbox = document.forms["myForm"]["checkbox"].value;
+  
+  
+  if(fname == "" || lname == "" || email==""|| password==""|| cpassword=="")
+{
+		  document.getElementById("validation").innerHTML = "Fill out all fields";
+
+  
+  if(document.getElementById("cbox1").checked==false)
+  {
+		  document.getElementById("notification").innerHTML = "Please check the box";
+  }
+  if (fname == ""){
+	document.getElementById("fname1").style.backgroundColor = "red";
+	
+	document.getElementById("fname1").onfocus = function(){changecolor("fname1");}
+	}
+  if (lname == ""){
+	document.getElementById("lname1").style.backgroundColor = "red";
+	
+	document.getElementById("lname1").onfocus = function(){changecolor("lname1");}
+	
+	}
+  if (email == ""){
+	document.getElementById("email1").style.backgroundColor = "red";
+	
+	document.getElementById("email1").onfocus = function(){changecolor("email1");}
+	
+    }
+	if (password == ""){
+	document.getElementById("password1").style.backgroundColor = "red";
+	
+	document.getElementById("password1").onfocus = function(){changecolor("password1");}
+    }
+	if (cpassword == ""){
+	document.getElementById("cpassword1").style.backgroundColor = "red";
+	document.getElementById("cpassword1").onfocus = function(){changecolor("cpassword1");}
+	return false;
+    }
+
+
+}
+else if(passwordcheck()==false)
+{
+	document.getElementById("password1").style.backgroundColor = "red";
+	document.getElementById("password1").onfocus = function(){changecolor("password1");}
+	document.getElementById("cpassword1").style.backgroundColor = "red";
+	document.getElementById("cpassword1").onfocus = function(){changecolor("cpassword1");}
+	document.getElementById("notification").innerHTML = "Password mismatch";
+	return false;
+	
+
+}
+else if(document.getElementById("cbox1").checked==false)
+  {
+		  document.getElementById("notification").innerHTML = "Please check the box";
+		  return false;
+  }
+
+
+else{
+			alert("Form successfully submitted");
+			
+			return true;
+
+
+}
+
+
+
+
+}
+
+function passwordcheck(){
+	if (document.getElementById("password1").value == document.getElementById("cpassword1").value)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}	
+
+
+}
+
+
+</script>
+<style>
+#myForm{
+align:center;
+}
+
+label{
+align:left;
+}
+
+input{
+align:right;
+margin-left: 50px;
+}
+#email1{margin-left: 80px;}
+#password1{margin-left: 60px;}
+#cpassword1{margin-left: 5px;}
+
+
+</style>
+
+<head id="headid">
+<h3 align="center">by Maitreyee Mhasakar</h3>
+<p id="validation" align="center" style="color:red"> </p>
+<p id="notification" align="center" style="color:red"> </p>
+<br>
+
+</head>
+
+
+
+<body>
+<form id="myForm" name="myForm" onsubmit="return validate();" style="text-align:center">
+<label>First Name</label><input id="fname1" name="fname" type="text"></input>
+<br>
+<br>
+<br>
+<label>Last Name</label><input id="lname1" name="lname" type="text"></input>
+<br>
+<br>
+<br>
+<label>Email</label><input id="email1" name="email" type="text"></input>
+<br>
+<br>
+<br>
+<label>Password</label><input id="password1" name="password" type="text"></input>
+<br>
+<br>
+<br>
+<label>Re-type Password</label><input id="cpassword1" name="cpassword" type="text"></input>
+<br>
+<br>
+<br>
+<input id="cbox1" name="checkbox" type="checkbox">I accept the terms and conditions</input>
+<br>
+<br>
+<br>
+<input type="submit" value="Submit"></input> 
+
+
+
+</form>
+</body>
+</html>
