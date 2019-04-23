@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+		text-align:center;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	  #input_div{ text-align:center;}
+
+    </style>
+  </head>
+      <script>
+      var map;
+	  var address;
+	  var service;
+	  var infowindow;
+	  var zooming=8;
+
+
+	  function initMap()
+	  {
+			geocoder = new google.maps.Geocoder();
+			var latlng = new google.maps.LatLng(-34.397, 150.644);
+			var mapOptions = {
+				zoom: 8,
+				center: latlng
+			}
+		map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		
+	}
+	
+	function getaddress(){
+
+		geocoder = new google.maps.Geocoder();
+
+		address=document.getElementById("address").value;
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		
+			if (status == 'OK') {
+				map.setCenter(results[0].geometry.location);
+				var marker = new google.maps.Marker({
+					map: map,
+					position: results[0].geometry.location
+				});
+			} else {
+				alert('Geocode was not successful for the following reason: ' + status);
+			}
+			var mapOptions = {
+				zoom: 15,
+				center: results[0].geometry.location
+			}
+			map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+	
+			var request = {
+				location: results[0].geometry.location,
+				radius: '1500',
+				type: ['store']
+			};
+			service = new google.maps.places.PlacesService(map);
+			service.nearbySearch(request, callback);
+
+		});
+	}
+	  
+	  
+
+	function callback(results, status) {
+		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			for (var i = 0; i < results.length; i++) {
+				var marker1 = new google.maps.Marker({
+					map: map,
+					position: results[i].geometry.location
+
+		  
+				});
+				marker1.setMap(map);
+
+
+			}
+		}
+	}	  
+
+    </script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi_JTzVqM5i25N6YLkEnn81lCxKj2BtdQ&callback=initMap&libraries=places" async defer></script>
+
+  <body>
+  <div id="input_div">
+  <form>
+	<label> Enter place to search stores</label>
+  	<input type="text" id="address"></input>
+	<input type="button" id="search" value="Search" onclick="getaddress()" ></input>
+
+  </form>
+  </div>
+    <div id="map">	
+	</div>
+  </body>
+</html>
